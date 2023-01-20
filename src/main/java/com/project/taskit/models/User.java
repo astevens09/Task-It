@@ -23,7 +23,10 @@ public class User {
     private String lastName;
 
     @Column(nullable = false, unique = true)
-    private String userName;
+    private String username;
+
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column
     private String profileImage;
@@ -37,4 +40,18 @@ public class User {
     public User() {
     }
 
+    public User(String firstName, String lastName, String username, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(User copy) {
+        this.id = copy.id;
+        this.username = copy.username;
+        this.password = copy.password;
+        this.email = copy.email;
+    }
 }
