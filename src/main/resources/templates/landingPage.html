@@ -23,12 +23,13 @@
          style="height: 900px; width: 900px">
     <div style="position: absolute;
         top: 670px;
-        right: 580px;">
-        <button style="background-color: black; color: #fff600; border: none;" class="btn btn-lg btn-primary me-3">
+        right: 580px;"
+        class="d-flex align-items-center justify-content-center">
+        <a th:href="@{/sign-up}" style="background-color: black; color: #fff600; border: none;" class="btn btn-lg btn-primary me-3 d-flex align-items-center justify-content-center">
             Sign-Up
-        </button>
-        <button style="background-color: #fff600; color: black; border: none;" class="btn btn-lg btn-primary">Login
-        </button>
+        </a>
+        <a th:href="@{/login}" style="background-color: #fff600; color: black; border: none;" class="btn btn-lg btn-primary d-flex align-items-center justify-content-center">Login
+        </a>
     </div>
 
 </section>

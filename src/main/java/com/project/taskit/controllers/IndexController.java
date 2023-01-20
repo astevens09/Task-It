@@ -12,5 +12,15 @@ public class IndexController {
         return "landingPage";
     }
 
+    @GetMapping("/login")
+    public String loginPage(){
+        return "loginPage";
+    }
+
+    @GetMapping("/sign-up")
+    public String signUpPage(){
+        return "signupPage";
+    }
+
 
 }
