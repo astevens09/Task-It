@@ -37,6 +37,11 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .authorizeHttpRequests()
+                .requestMatchers("/", "/login", "/sign-up") // anyone can see the home and the ads pages
+                .permitAll()
+                .anyRequest().authenticated()
+                .and()
                 /* Login configuration */
                 .formLogin()
                 .loginPage("/login")
@@ -47,18 +52,16 @@ public class SecurityConfiguration {
                 .logout()
                 .logoutSuccessUrl("/login?logout") // append a query string value
                 /* Pages that can be viewed without having to log in */
-                .and()
-                .authorizeRequests()
-                .antMatchers("/", "/login", "/sign-up") // anyone can see the home and the ads pages
-                .permitAll()
+//                .and()
+
                 /* Pages that require authentication */
-                .and()
-                .authorizeRequests()
-                .antMatchers(
-                        "/posts/create", // only authenticated users can create ads
-                        "/posts/{id}/edit" // only authenticated users can edit ads
-                )
-                .authenticated()
+//                .and()
+//                .authorizeHttpRequests()
+//                .requestMatchers(
+//                        "/posts/create", // only authenticated users can create ads
+//                        "/posts/{id}/edit" // only authenticated users can edit ads
+//                )
+//                .authenticated()
         ;
         return http.build();
     }
