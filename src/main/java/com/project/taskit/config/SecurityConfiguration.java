@@ -13,55 +13,53 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfiguration {
 
-//    @Autowired
     private UserDetailsLoader usersLoader;
 
     public SecurityConfiguration(UserDetailsLoader usersLoader) {
         this.usersLoader = usersLoader;
     }
-//
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-//
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-//    @Bean
-//    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder){
-//        System.out.println("TEST!!!!");
-//        UserDetails user = User
-//                .withUsername("anthony")
-//                .password("{bcrypt}$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW")
-//                .roles("user")
-//                .build();
-
-//        return new UserDetailsLoader();
-//    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        ((AuthorizeHttpRequestsConfigurer.AuthorizedUrl)http.authorizeHttpRequests().anyRequest()).authenticated();
         http
             .authorizeHttpRequests(auth -> {
                 auth.requestMatchers("/","/sign-up","/css/**","/images/**","/js/**","/about").permitAll();
                 auth.anyRequest().authenticated();
             })
-//            .formLogin(form ->{
-//                form
-//                .loginPage("/login")
-//                        .permitAll();
-//            });
-            .formLogin(Customizer.withDefaults());
+            .formLogin(form ->{
+                form
+                .loginPage("/login")
+                        .defaultSuccessUrl("/tasks")
+                        .permitAll();
+            })
+                .csrf(csrf ->{csrf
+                        .disable();});
+            http.logout(logout -> {logout
+//                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+//                    .logoutUrl("/perform_logout")
+//                    .logoutSuccessUrl("/login");
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID");
+            });
+//            .formLogin(Customizer.withDefaults());
         return http.build();
     }
 
