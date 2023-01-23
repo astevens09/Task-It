@@ -1,5 +1,6 @@
-package com.project.taskit.models;
+package com.project.taskit.config;
 
+import com.project.taskit.models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
